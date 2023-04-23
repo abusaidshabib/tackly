@@ -1,8 +1,9 @@
 import React from 'react';
 import { useLoaderData } from 'react-router-dom';
+import useTitle from '../hook/UseTitle/UseTitle';
 
 const Task = () => {
-
+  useTitle("Single Task")
   const data = useLoaderData();
 
   return (

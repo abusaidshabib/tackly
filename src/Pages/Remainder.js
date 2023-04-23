@@ -5,14 +5,16 @@ import 'react-toastify/dist/ReactToastify.css';
 import { AiFillDelete, AiFillEdit } from 'react-icons/ai';
 import Modal from '../Components/Home/Modal';
 import { Link } from 'react-router-dom';
+import useTitle from '../hook/UseTitle/UseTitle';
 
 const Remainder = () => {
+  useTitle("Remainder")
   const [selectedItem, setSelectedItem] = useState(null);
   const [tasks, setTasks] = useState();
-  const { user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/tasks/${user?.email}`)
+    fetch(`https://taskly-backend.vercel.app/tasks/${user?.email}`)
       .then(res => res.json())
       .then(data => setTasks(data.data.sort((a, b) => {
         const dateA = new Date(a.string);
@@ -30,8 +32,12 @@ const Remainder = () => {
   let current = temp + temp1 + temp2;
 
 
+  const condition1 = "card bg-red-700 text-primary-content mx-20 max-md:mx-2";
+  const condition2 = "card bg-gray-700 text-primary-content mx-20 max-md:mx-2";
+
+
   const handleDelete = (task) => {
-    fetch(`http://localhost:5000/tasks/${task?._id}`, {
+    fetch(`https://taskly-backend.vercel.app/tasks/${task?._id}`, {
       method: "DELETE",
       headers: {
         "content-type": "application/json"
@@ -51,6 +57,28 @@ const Remainder = () => {
       .catch(error => console.error(error))
   }
 
+  const handleDone = (id) => {
+
+    fetch(`http://localhost:5000/task/done/${id}`, {
+      method: "POST",
+      headers: {
+        "content-type": "application/json"
+      },
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.data.acknowledged) {
+          toast.warning('Work done successfully')
+        }
+        else {
+          toast.error(data.message)
+        }
+      })
+
+      .catch(error => console.error(error))
+
+  }
+
   return (
     <div className='min-h-screen'>
 
@@ -58,7 +86,7 @@ const Remainder = () => {
       <div className='grid gap-y-5'>
         {
           tasks?.map(task => (
-            <div key={task._id} className={`${task?.string <= current ? "card bg-red-700 text-primary-content mx-20 max-md:mx-2" : "card bg-gray-700 text-primary-content mx-20 max-md:mx-2"}`}>
+            <div key={task._id} className={`${task?.string <= current ? condition1 : condition2 }`}>
               <div className="flex justify-between py-5 px-10">
                 <div>
                   <h3 className="card-title tracking-widest">{task.title}</h3>
@@ -71,8 +99,16 @@ const Remainder = () => {
                     }
                     <br />
                   </p>
+                  {
+                    task.work="done" && <p>
+                      Task is done
+                    </p>
+                  }
                 </div>
                 <div className="card-actions justify-end">
+                  <button onClick={() => handleDone(task._id)} className="btn btn-primary">
+                    MARK AS DONE
+                  </button>
                   <Link to={`/task/${task?._id}`} className="btn btn-primary">
                     Details
                   </Link>

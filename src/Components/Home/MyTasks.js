@@ -12,13 +12,13 @@ const MyTasks = () => {
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/tasks/${user?.email}`)
+    fetch(`https://taskly-backend.vercel.app/tasks/${user?.email}`)
       .then(res => res.json())
       .then(data => setTasks(data.data.reverse()))
   }, [user?.email, tasks])
 
   const handleDelete = (task) => {
-    fetch(`http://localhost:5000/tasks/${task?._id}`, {
+    fetch(`https://taskly-backend.vercel.app/tasks/${task?._id}`, {
       method: "DELETE",
       headers: {
         "content-type": "application/json"

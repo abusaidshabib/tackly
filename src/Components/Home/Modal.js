@@ -34,7 +34,7 @@ const Modal = ({ selectedItem, setSelectedItem }) => {
       title, details, string, time
     }
 
-    fetch(`http://localhost:5000/tasks/${selectedItem?._id}`, {
+    fetch(`https://taskly-backend.vercel.app/tasks/${selectedItem?._id}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json"
@@ -77,7 +77,7 @@ const Modal = ({ selectedItem, setSelectedItem }) => {
 
         </div>
       </div>
-      <ToastContainer/>
+      <ToastContainer />
     </div>
   );
 };

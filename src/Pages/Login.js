@@ -1,9 +1,11 @@
 import React, { useContext } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../Context/UserContext';
 import GoogleSignIn from './Shared/GoogleSignIn';
+import useTitle from '../hook/UseTitle/UseTitle';
 
 const Login = () => {
+  useTitle("login")
 
   const { logIn, passReset } = useContext(AuthContext);
   const navigate = useNavigate();

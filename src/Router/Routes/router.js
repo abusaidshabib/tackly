@@ -23,7 +23,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/task/:id",
-        loader: ({ params }) => fetch(`http://localhost:5000/task/${params.id}`),
+        loader: ({ params }) => fetch(`https://taskly-backend.vercel.app/task/${params.id}`),
         element: <PrivateRouter> <Task></Task></PrivateRouter>
       },
       {

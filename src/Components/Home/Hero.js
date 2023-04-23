@@ -14,8 +14,8 @@ const Hero = () => {
   let isoString = now.toISOString();
   let temp1 = parseInt(isoString.slice(11, 13)) + 6;
   let temp2 = isoString.slice(13, 16)
-  let temp = isoString.slice(0,11);
-  let formattedString =temp+temp1+temp2;
+  let temp = isoString.slice(0, 11);
+  let formattedString = temp + temp1 + temp2;
 
   // 2023 - 04 - 05T18: 32
 
@@ -54,7 +54,7 @@ const Hero = () => {
 
     console.log(task)
 
-    fetch('http://localhost:5000/tasks', {
+    fetch('https://taskly-backend.vercel.app/tasks', {
       method: "POST",
       headers: {
         'content-type': 'application/json'

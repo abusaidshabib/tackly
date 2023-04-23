@@ -17,7 +17,7 @@ const Header = () => {
   let current = temp + temp1 + temp2;
 
   useEffect(() => {
-    fetch(`http://localhost:5000/tasks/${user?.email}`)
+    fetch(`https://taskly-backend.vercel.app/tasks/${user?.email}`)
       .then(res => res.json())
       .then(data => SetData(data.data.filter((item) => item.string >= current)))
   }, [current, user?.email, data])
@@ -47,14 +47,14 @@ const Header = () => {
       <div className="navbar-end">
         {
           user?.uid ?
-          <button onClick={logOut} className='btn btn-primary tracking-widest'>Logout</button>
-          :
-          <Link className='btn btn-primary tracking-widest' to="/login">Login/register</Link>
+            <button onClick={logOut} className='btn btn-primary tracking-widest'>Logout</button>
+            :
+            <Link className='btn btn-primary tracking-widest' to="/login">Login/register</Link>
         }
       </div>
       <label tabIndex={0} className="btn btn-ghost btn-circle">
         <div className="indicator">
-          <IoMdNotificationsOutline className='text-2xl text-gray-200'/>
+          <IoMdNotificationsOutline className='text-2xl text-gray-200' />
           <span className="badge badge-sm indicator-item">{data?.length}</span>
         </div>
       </label>
